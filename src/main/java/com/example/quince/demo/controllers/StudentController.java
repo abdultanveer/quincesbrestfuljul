@@ -1,46 +1,34 @@
 package com.example.quince.demo.controllers;
 
+
 import com.example.quince.demo.model.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.example.quince.demo.services.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController
 public class StudentController {
+    @Autowired
+    StudentService studentService;  //di will instantiate it for me
 
-    @GetMapping("/student")
+    @RequestMapping("/students")
+    public List<Student> getStudents() {
 
-    public Student getStudent() {
-        return new Student("Ramesh", "Fadatare");
-
+        return studentService.getStudents();
     }
 
-    @GetMapping("/students")
-    public List<Student> getStudents(){
-        List<Student> students = new ArrayList<>();
-        students.add(new Student("Ramesh", "Fadatare"));
-        students.add(new Student("Tony", "Cena"));
-        students.add(new Student("Sanjay", "Jadhav"));
-        students.add(new Student("Ram", "Jadhav"));
-        students.add(new Student("Umesh", "Fadatare"));
-        return students;
+    @RequestMapping(method = RequestMethod.POST, value ="students")
+    public void addStudent(@RequestBody Student student) {
+        System.out.println("controllers add student");
+       //studentService.addStudent(student);
     }
 
-   // http://localhost:8080/student/abdul/ansari/
-    @GetMapping("/student/{firstName}/{lastName}/")
-    public Student studentPathVariable(@PathVariable("firstName") String firstName,
-                                       @PathVariable("lastName") String lastName) {
-        return new Student(firstName, lastName);
-    }
 
-    @GetMapping("/student/query")
-    public Student studentQueryParam(
-            @RequestParam(name = "firstName") String firstName,
-            @RequestParam(name = "lastName") String lastName) {
-        return new Student(firstName, lastName);
-    }
-    }
+
+}
