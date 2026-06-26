@@ -1,6 +1,8 @@
 package com.example.quince.demo.services;
 
+import com.example.quince.demo.StudentRepository;
 import com.example.quince.demo.model.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,23 +10,41 @@ import java.util.List;
 
 @Service
 public class StudentService {
-   // @Autowired
-    //StudentRepository studentRepository;
+    @Autowired
+    StudentRepository repository;
 
-    List<Student> students = new ArrayList<>();
-
-    public void createStudents() {
-
-        students.add(new Student(1,"abdul","ansari"));
-        students.add(new Student(2,"android","flutter"));
-        students.add(new Student(3,"java","kotlin"));
-        students.add(new Student(4,"quince ","blr"));
+    // CREATE
+    public Student createStudent(Student student) {
+        return repository.save(student);
     }
 
-    public List<Student> getStudents() {
-        createStudents();
-       // return studentRepository.findAll();
-        return students;
+    // READ ALL
+    public List<Student> getAllStudents() {
+        return repository.findAll();
     }
 
+    // READ ONE
+    public Student getStudentById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+    }
+
+    // UPDATE
+    public Student updateStudent(Long id, Student student) {
+
+        Student existing = getStudentById(id);
+
+        existing.setFirstName(student.getFirstName());
+        existing.setLastName(student.getLastName());
+
+
+        return repository.save(existing);
+    }
+
+    // DELETE
+    public void deleteStudent(Long id) {
+        repository.deleteById(id);
+    }
 }
+
+

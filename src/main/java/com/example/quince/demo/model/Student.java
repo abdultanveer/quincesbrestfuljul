@@ -1,16 +1,16 @@
 package com.example.quince.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.context.annotation.Bean;
 
 @Entity
+@Table(name="students")         //create table students(id int)
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
+
+   // @Column(name = "studentnae")
     String firstName;
     String lastName;
 
