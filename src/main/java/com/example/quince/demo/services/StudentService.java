@@ -19,7 +19,7 @@ public class StudentService {
     }
 
     // READ ALL
-    public List<Student> getAllStudents() {
+    public List<Student> getAllStudentz() {
         return repository.findAll();
     }
 

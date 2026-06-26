@@ -8,17 +8,26 @@ import org.springframework.context.annotation.Bean;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    Long id;
 
    // @Column(name = "studentnae")
     String firstName;
     String lastName;
 
-    public Student(int id ,String firstName, String lastName) {
+    public Student(){}
+    public Student(Long id, String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
